@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.sms.controller.AdminDashboardController"
+            styleClass="main-root" prefWidth="1100" prefHeight="680">
+
+    <!-- ══ TOP NAV BAR ═══════════════════════════════════════════ -->
+    <top>
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="0">
+            <Label styleClass="nav-brand" text="SMS Admin"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="userLabel" styleClass="nav-user" text=""/>
+            <Button styleClass="btn-logout" text="Logout" onAction="#handleLogout"/>
+        </HBox>
+    </top>
+
+    <!-- ══ SIDEBAR ═══════════════════════════════════════════════ -->
+    <left>
+        <VBox styleClass="sidebar" spacing="4" prefWidth="200">
+            <padding><Insets top="20" right="8" bottom="20" left="8"/></padding>
+            <Label styleClass="sidebar-section" text="MANAGEMENT"/>
+            <Button styleClass="sidebar-btn" text="🏠  Dashboard"   onAction="#showDashboard" maxWidth="Infinity"/>
+            <Button styleClass="sidebar-btn" text="👤  Students"    onAction="#showStudents"  maxWidth="Infinity"/>
+            <Button styleClass="sidebar-btn" text="👨‍🏫  Teachers"   onAction="#showTeachers"  maxWidth="Infinity"/>
+            <Button styleClass="sidebar-btn" text="📚  Courses"     onAction="#showCourses"   maxWidth="Infinity"/>
+            <Label styleClass="sidebar-section" text="REPORTS"/>
+            <Button styleClass="sidebar-btn" text="📊  Reports"     onAction="#showReports"   maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <!-- ══ CONTENT AREA ══════════════════════════════════════════ -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+            <VBox fx:id="contentArea" spacing="20" styleClass="content-area">
+                <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
+
+                <!-- Page Title -->
+                <HBox alignment="CENTER_LEFT">
+                    <Label fx:id="pageTitle" styleClass="page-title" text="Dashboard"/>
+                </HBox>
+
+                <!-- Stat Cards Row -->
+                <HBox fx:id="statsRow" spacing="16">
+                    <VBox styleClass="stat-card stat-blue" HBox.hgrow="ALWAYS">
+                        <Label styleClass="stat-number" fx:id="statStudents" text="0"/>
+                        <Label styleClass="stat-label"  text="Total Students"/>
+                    </VBox>
+                    <VBox styleClass="stat-card stat-green" HBox.hgrow="ALWAYS">
+                        <Label styleClass="stat-number" fx:id="statTeachers" text="0"/>
+                        <Label styleClass="stat-label"  text="Total Teachers"/>
+                    </VBox>
+                    <VBox styleClass="stat-card stat-orange" HBox.hgrow="ALWAYS">
+                        <Label styleClass="stat-number" fx:id="statCourses"  text="0"/>
+                        <Label styleClass="stat-label"  text="Active Courses"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Dynamic sub-content (students table, courses table, etc.) -->
+                <VBox fx:id="subContent" spacing="12"/>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

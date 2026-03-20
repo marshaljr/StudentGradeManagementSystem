@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.sms.controller.TeacherDashboardController"
+            styleClass="main-root" prefWidth="1100" prefHeight="680">
+
+    <top>
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="0">
+            <Label styleClass="nav-brand" text="SMS Teacher"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="userLabel" styleClass="nav-user" text=""/>
+            <Button styleClass="btn-logout" text="Logout" onAction="#handleLogout"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="4" prefWidth="200">
+            <padding><Insets top="20" right="8" bottom="20" left="8"/></padding>
+            <Label styleClass="sidebar-section" text="TEACHER MENU"/>
+            <Button styleClass="sidebar-btn" text="🏠  Dashboard"    onAction="#showDashboard"   maxWidth="Infinity"/>
+            <Button styleClass="sidebar-btn" text="📚  My Courses"   onAction="#showCourses"     maxWidth="Infinity"/>
+            <Button styleClass="sidebar-btn" text="📝  Assessments"  onAction="#showAssessments" maxWidth="Infinity"/>
+            <Button styleClass="sidebar-btn" text="✏️  Grade Entry"  onAction="#showGradeEntry"  maxWidth="Infinity"/>
+            <Button styleClass="sidebar-btn" text="📅  Attendance"   onAction="#showAttendance"  maxWidth="Infinity"/>
+            <Button styleClass="sidebar-btn" text="📊  Class Reports" onAction="#showReports"    maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+            <VBox fx:id="contentArea" spacing="20" styleClass="content-area">
+                <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
+                <Label fx:id="pageTitle" styleClass="page-title" text="My Dashboard"/>
+                <VBox fx:id="subContent" spacing="12"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
