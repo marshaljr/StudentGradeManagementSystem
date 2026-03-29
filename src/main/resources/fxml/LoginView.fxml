@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.sms.controller.LoginController"
+           styleClass="login-root"
+           prefWidth="900" prefHeight="600">
+
+    <!-- Background split -->
+    <HBox>
+        <VBox styleClass="login-left" prefWidth="380" alignment="CENTER" spacing="12">
+            <Label styleClass="brand-title" style="-fx-text-fill: #FFB703;" text="SMS"/>
+            <Label styleClass="brand-subtitle" style="-fx-text-fill: #FFB703;" text="Student Grade&#10;Management System"/>
+            <Label styleClass="brand-desc" style="-fx-text-fill: #FFB703;"
+                   text="Empowering teachers and students&#10;with smart academic tools."
+                   wrapText="true" textAlignment="CENTER"/>
+        </VBox>
+
+        <VBox styleClass="login-right" prefWidth="520" alignment="CENTER" spacing="0">
+            <VBox styleClass="login-card" alignment="TOP_LEFT" maxWidth="360">
+                <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+                <spacing>0</spacing>
+
+                <Label styleClass="login-heading" text="Welcome back"/>
+                <Label styleClass="login-subheading" text="Sign in to your account"/>
+                <Region prefHeight="24"/>
+
+                <!-- Username -->
+                <Label styleClass="field-label" text="Username"/>
+                <Region prefHeight="4"/>
+                <TextField fx:id="usernameField" styleClass="login-field"
+                           promptText="Enter your username"/>
+                <Region prefHeight="16"/>
+
+                <!-- Password -->
+                <Label styleClass="field-label" text="Password"/>
+                <Region prefHeight="4"/>
+                <PasswordField fx:id="passwordField" styleClass="login-field"
+                               promptText="Enter your password"/>
+                <Region prefHeight="8"/>
+
+                <!-- Error message -->
+                <Label fx:id="errorLabel" styleClass="error-label"
+                       text="" wrapText="true"/>
+                <Region prefHeight="20"/>
+
+                <!-- Login button -->
+                <Button fx:id="loginButton" styleClass="btn-primary"
+                        text="Sign In" maxWidth="Infinity"
+                        onAction="#handleLogin"/>
+                <Region prefHeight="16"/>
+                
+                <Hyperlink text="Forgot your password?" onAction="#handleForgotPassword" styleClass="hint-text"/>
+                <Region prefHeight="16"/>
+
+                <VBox spacing="4" style="-fx-padding: 10 0 0 0;">
+                    <Label styleClass="hint-text" style="-fx-font-weight: bold;" text="Demo Accounts:"/>
+                    <GridPane hgap="15" vgap="4">
+                        <Label styleClass="hint-text" text="Admin:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <Label styleClass="hint-text" text="admin / password123" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                        
+                        <Label styleClass="hint-text" text="Teacher:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <Label styleClass="hint-text" text="t.smith / password123" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        
+                        <Label styleClass="hint-text" text="Student:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <Label styleClass="hint-text" text="s.alice / password123" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    </GridPane>
+                </VBox>
+            </VBox>
+        </VBox>
+    </HBox>
+</StackPane>
