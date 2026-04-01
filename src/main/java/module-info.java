@@ -1,11 +1,7 @@
 module com.sms {
     requires javafx.controls;
     requires javafx.fxml;
-<<<<<<< HEAD
     requires transitive java.sql;
-=======
-    requires java.sql;
->>>>>>> dc8ddd81eefd8c1fff1c6df629e2bf26eab2a51f
     requires org.apache.pdfbox;
     requires org.apache.commons.csv;
 
