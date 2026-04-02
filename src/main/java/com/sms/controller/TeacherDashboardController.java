@@ -32,12 +32,27 @@ public class TeacherDashboardController {
     @FXML private Label userLabel;
     @FXML private Label pageTitle;
     @FXML private VBox  subContent;
+    @FXML private VBox  sidebarPane;
+    @FXML private Button sidebarToggleBtn;
+    @FXML private Button btnThemeToggle;
+    @FXML private Label breadcrumbCurrent;
+    @FXML private BorderPane mainRoot;  // For accessing root for dark mode styling
+
+    // Sidebar buttons for active state tracking
+    @FXML private Button btnDashboard;
+    @FXML private Button btnCourses;
+    @FXML private Button btnAssessments;
+    @FXML private Button btnGradeEntry;
+    @FXML private Button btnAttendance;
+    @FXML private Button btnReports;
 
     private final CourseDAO     courseDAO     = new CourseDAO();
     private final GradeDAO      gradeDAO      = new GradeDAO();
     private final AttendanceDAO attendanceDAO = new AttendanceDAO();
 
     private TeacherUser currentTeacher;
+    private boolean sidebarExpanded = true;  // Track sidebar state
+    private boolean darkModeEnabled = false;  // Track dark mode state
 
     @FXML
     public void initialize() {
@@ -49,7 +64,59 @@ public class TeacherDashboardController {
 
     @FXML public void handleLogout() { NavigationUtil.logout(); }
 
+    /**
+     * Toggles sidebar visibility for mobile/tablet responsiveness
+     */
+    @FXML
+    private void toggleSidebar() {
+        sidebarExpanded = !sidebarExpanded;
+        if (sidebarExpanded) {
+            sidebarPane.getStyleClass().remove("sidebar-hidden");
+            sidebarPane.getStyleClass().add("sidebar-expanded");
+        } else {
+            sidebarPane.getStyleClass().remove("sidebar-expanded");
+            sidebarPane.getStyleClass().add("sidebar-hidden");
+        }
+    }
+
+    /**
+     * Toggles dark mode theme for the entire application
+     */
+    @FXML
+    private void toggleDarkMode() {
+        darkModeEnabled = !darkModeEnabled;
+        if (mainRoot != null) {
+            if (darkModeEnabled) {
+                mainRoot.getStyleClass().add("dark-mode");
+                btnThemeToggle.setText("☀️");  // Show sun when in dark mode
+            } else {
+                mainRoot.getStyleClass().remove("dark-mode");
+                btnThemeToggle.setText("🌙");  // Show moon when in light mode
+            }
+        }
+    }
+
+    /**
+     * Sets the active navigation button style and updates breadcrumb
+     */
+    private void setActiveNavButton(Button activeButton, String pageName) {
+        // Remove active style from all buttons
+        for (Button btn : new Button[]{btnDashboard, btnCourses, btnAssessments, btnGradeEntry, btnAttendance, btnReports}) {
+            btn.getStyleClass().remove("sidebar-btn-active");
+            btn.getStyleClass().add("sidebar-btn");
+        }
+        // Set active style on the current button
+        activeButton.getStyleClass().remove("sidebar-btn");
+        activeButton.getStyleClass().add("sidebar-btn-active");
+        
+        // Update breadcrumb
+        if (breadcrumbCurrent != null) {
+            breadcrumbCurrent.setText(pageName);
+        }
+    }
+
     @FXML public void showDashboard() {
+        setActiveNavButton(btnDashboard, "Dashboard");
         pageTitle.setText("My Dashboard");
         subContent.getChildren().clear();
 
@@ -73,31 +140,36 @@ public class TeacherDashboardController {
     }
 
     @FXML public void showCourses() {
+        setActiveNavButton(btnCourses, "My Courses");
         pageTitle.setText("My Courses");
         subContent.getChildren().clear();
         subContent.getChildren().add(buildCourseList());
     }
 
     @FXML public void showAssessments() {
-        pageTitle.setText("Assessments");
+        setActiveNavButton(btnAssessments, "Assessments");
+        pageTitle.setText("Manage Assessments");
         subContent.getChildren().clear();
         subContent.getChildren().add(buildAssessmentPanel());
     }
 
     @FXML public void showGradeEntry() {
-        pageTitle.setText("Grade Entry");
+        setActiveNavButton(btnGradeEntry, "Grade Entry");
+        pageTitle.setText("Enter Grades");
         subContent.getChildren().clear();
         subContent.getChildren().add(buildGradeEntryPanel());
     }
 
     @FXML public void showAttendance() {
-        pageTitle.setText("Attendance");
+        setActiveNavButton(btnAttendance, "Attendance");
+        pageTitle.setText("Take Attendance");
         subContent.getChildren().clear();
         subContent.getChildren().add(buildAttendancePanel());
     }
 
     @FXML public void showReports() {
-        pageTitle.setText("Class Reports");
+        setActiveNavButton(btnReports, "Class Reports");
+        pageTitle.setText("Class Performance Report");
         subContent.getChildren().clear();
         subContent.getChildren().add(buildReportsPanel());
     }

@@ -5,34 +5,81 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.sms.controller.StudentDashboardController"
-            styleClass="main-root" prefWidth="1100" prefHeight="680">
+            fx:id="mainRoot"
+            styleClass="main-root">
 
+    <!-- Top Navbar -->
     <top>
         <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="0">
+            <!-- Sidebar Toggle Button (visible on mobile/tablet) -->
+            <Button fx:id="sidebarToggleBtn" styleClass="sidebar-toggle-btn"
+                    text="☰" onAction="#toggleSidebar"
+                    visible="false">
+                <tooltip><Tooltip text="Toggle navigation menu (Ctrl+M)"/></tooltip>
+            </Button>
+            
             <Label styleClass="nav-brand" text="SMS Student"/>
             <Region HBox.hgrow="ALWAYS"/>
+            
+            <!-- Dark Mode Toggle -->
+            <Button fx:id="btnThemeToggle" styleClass="theme-toggle-btn" text="🌙"
+                    onAction="#toggleDarkMode">
+                <tooltip><Tooltip text="Toggle dark mode (Ctrl+D)"/></tooltip>
+            </Button>
+            
             <Label fx:id="userLabel" styleClass="nav-user" text=""/>
-            <Button styleClass="btn-logout" text="Logout" onAction="#handleLogout"/>
+            <Button styleClass="btn-logout" text="Logout" onAction="#handleLogout">
+                <tooltip><Tooltip text="Sign out of your account"/></tooltip>
+            </Button>
         </HBox>
     </top>
 
+    <!-- Left Sidebar (collapsible) -->
     <left>
-        <VBox styleClass="sidebar" spacing="4" prefWidth="200">
+        <VBox fx:id="sidebarPane" styleClass="sidebar" spacing="4" prefWidth="200">
             <padding><Insets top="20" right="8" bottom="20" left="8"/></padding>
             <Label styleClass="sidebar-section" text="MY ACADEMICS"/>
-            <Button styleClass="sidebar-btn" text="🏠  Dashboard"    onAction="#showDashboard"  maxWidth="Infinity"/>
-            <Button styleClass="sidebar-btn" text="📚  My Courses"   onAction="#showCourses"    maxWidth="Infinity"/>
-            <Button styleClass="sidebar-btn" text="📊  My Grades"    onAction="#showGrades"     maxWidth="Infinity"/>
-            <Button styleClass="sidebar-btn" text="📅  Attendance"   onAction="#showAttendance" maxWidth="Infinity"/>
-            <Button styleClass="sidebar-btn" text="📄  Transcript"   onAction="#showTranscript" maxWidth="Infinity"/>
+            
+            <Button fx:id="btnDashboard" styleClass="sidebar-btn" 
+                    text="≡  Dashboard"    onAction="#showDashboard"  maxWidth="Infinity">
+                <tooltip><Tooltip text="View your dashboard summary (Ctrl+H)"/></tooltip>
+            </Button>
+            <Button fx:id="btnCourses" styleClass="sidebar-btn" 
+                    text="📚  My Courses"   onAction="#showCourses"    maxWidth="Infinity">
+                <tooltip><Tooltip text="View your enrolled courses (Ctrl+C)"/></tooltip>
+            </Button>
+            <Button fx:id="btnGrades" styleClass="sidebar-btn" 
+                    text="✓  My Grades"    onAction="#showGrades"     maxWidth="Infinity">
+                <tooltip><Tooltip text="Check your grades and GPA (Ctrl+G)"/></tooltip>
+            </Button>
+            <Button fx:id="btnAttendance" styleClass="sidebar-btn" 
+                    text="📅  Attendance"   onAction="#showAttendance" maxWidth="Infinity">
+                <tooltip><Tooltip text="View attendance records (Ctrl+A)"/></tooltip>
+            </Button>
+            <Button fx:id="btnTranscript" styleClass="sidebar-btn" 
+                    text="📄  Transcript"   onAction="#showTranscript" maxWidth="Infinity">
+                <tooltip><Tooltip text="Download your transcript (Ctrl+T)"/></tooltip>
+            </Button>
         </VBox>
     </left>
 
+    <!-- Main Content Area -->
     <center>
         <ScrollPane fitToWidth="true" styleClass="content-scroll">
             <VBox fx:id="contentArea" spacing="20" styleClass="content-area">
                 <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
+                
+                <!-- Breadcrumb Navigation -->
+                <HBox fx:id="breadcrumb" spacing="8" alignment="CENTER_LEFT" styleClass="breadcrumb-bar">
+                    <Label text="Home" styleClass="breadcrumb-item"/>
+                    <Label text="›" styleClass="breadcrumb-separator"/>
+                    <Label fx:id="breadcrumbCurrent" text="Dashboard" styleClass="breadcrumb-current"/>
+                </HBox>
+                
+                <!-- Page Title -->
                 <Label fx:id="pageTitle" styleClass="page-title" text="My Dashboard"/>
+                
+                <!-- Dynamic Content -->
                 <VBox fx:id="subContent" spacing="12"/>
             </VBox>
         </ScrollPane>

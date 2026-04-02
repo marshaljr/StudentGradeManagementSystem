@@ -31,11 +31,28 @@ public class AdminDashboardController {
     @FXML private Label statStudents;
     @FXML private Label statTeachers;
     @FXML private Label statCourses;
+    @FXML private Label statStudentsTrend;
+    @FXML private Label statTeachersTrend;
+    @FXML private Label statCoursesTrend;
     @FXML private HBox  statsRow;
     @FXML private VBox  subContent;
+    @FXML private VBox  sidebarPane;
+    @FXML private Button sidebarToggleBtn;
+    @FXML private Button btnThemeToggle;
+    @FXML private Label breadcrumbCurrent;
+    @FXML private BorderPane mainRoot;  // For accessing root for dark mode styling
+
+    // Sidebar buttons for active state tracking
+    @FXML private Button btnDashboard;
+    @FXML private Button btnStudents;
+    @FXML private Button btnTeachers;
+    @FXML private Button btnCourses;
+    @FXML private Button btnReports;
 
     private final UserDAO   userDAO   = new UserDAO();
     private final CourseDAO courseDAO = new CourseDAO();
+    private boolean sidebarExpanded = true;  // Track sidebar state
+    private boolean darkModeEnabled = false;  // Track dark mode state
 
     @FXML
     public void initialize() {
@@ -45,14 +62,66 @@ public class AdminDashboardController {
     }
 
     // ═══════════════════════════════════════════════════════════
-    // NAVIGATION
+    // RESPONSIVE SIDEBAR & NAVIGATION
     // ═══════════════════════════════════════════════════════════
+
+    /**
+     * Toggles sidebar visibility for mobile/tablet responsiveness
+     */
+    @FXML
+    private void toggleSidebar() {
+        sidebarExpanded = !sidebarExpanded;
+        if (sidebarExpanded) {
+            sidebarPane.getStyleClass().remove("sidebar-hidden");
+            sidebarPane.getStyleClass().add("sidebar-expanded");
+        } else {
+            sidebarPane.getStyleClass().remove("sidebar-expanded");
+            sidebarPane.getStyleClass().add("sidebar-hidden");
+        }
+    }
+
+    /**
+     * Toggles dark mode theme for the entire application
+     */
+    @FXML
+    private void toggleDarkMode() {
+        darkModeEnabled = !darkModeEnabled;
+        if (mainRoot != null) {
+            if (darkModeEnabled) {
+                mainRoot.getStyleClass().add("dark-mode");
+                btnThemeToggle.setText("☀️");  // Show sun when in dark mode
+            } else {
+                mainRoot.getStyleClass().remove("dark-mode");
+                btnThemeToggle.setText("🌙");  // Show moon when in light mode
+            }
+        }
+    }
+
+    /**
+     * Sets the active navigation button style and updates breadcrumb
+     */
+    private void setActiveNavButton(Button activeButton, String pageName) {
+        // Remove active style from all buttons
+        for (Button btn : new Button[]{btnDashboard, btnStudents, btnTeachers, btnCourses, btnReports}) {
+            btn.getStyleClass().remove("sidebar-btn-active");
+            btn.getStyleClass().add("sidebar-btn");
+        }
+        // Set active style on the current button
+        activeButton.getStyleClass().remove("sidebar-btn");
+        activeButton.getStyleClass().add("sidebar-btn-active");
+        
+        // Update breadcrumb
+        if (breadcrumbCurrent != null) {
+            breadcrumbCurrent.setText(pageName);
+        }
+    }
 
     @FXML public void handleLogout() {
         NavigationUtil.logout();
     }
 
     @FXML public void showDashboard() {
+        setActiveNavButton(btnDashboard, "Dashboard");
         pageTitle.setText("Dashboard");
         statsRow.setVisible(true); statsRow.setManaged(true);
         refreshStats();
@@ -60,6 +129,7 @@ public class AdminDashboardController {
     }
 
     @FXML public void showStudents() {
+        setActiveNavButton(btnStudents, "Students");
         pageTitle.setText("Student Management");
         statsRow.setVisible(false); statsRow.setManaged(false);
         subContent.getChildren().clear();
@@ -67,6 +137,7 @@ public class AdminDashboardController {
     }
 
     @FXML public void showTeachers() {
+        setActiveNavButton(btnTeachers, "Teachers");
         pageTitle.setText("Teacher Management");
         statsRow.setVisible(false); statsRow.setManaged(false);
         subContent.getChildren().clear();
@@ -74,6 +145,7 @@ public class AdminDashboardController {
     }
 
     @FXML public void showCourses() {
+        setActiveNavButton(btnCourses, "Courses");
         pageTitle.setText("Course Management");
         statsRow.setVisible(false); statsRow.setManaged(false);
         subContent.getChildren().clear();
@@ -81,6 +153,7 @@ public class AdminDashboardController {
     }
 
     @FXML public void showReports() {
+        setActiveNavButton(btnReports, "Reports");
         pageTitle.setText("Reports");
         statsRow.setVisible(false); statsRow.setManaged(false);
         subContent.getChildren().clear();
@@ -96,6 +169,21 @@ public class AdminDashboardController {
         statStudents.setText(String.valueOf(counts[0]));
         statTeachers.setText(String.valueOf(counts[1]));
         statCourses.setText(String.valueOf(counts[2]));
+        
+        // Add trend indicators (for demo: showing positive trends)
+        // In production, compare with previous period data
+        if (statStudentsTrend != null) {
+            statStudentsTrend.setText("↑ 12% this semester");
+            statStudentsTrend.getStyleClass().add("stat-trend-up");
+        }
+        if (statTeachersTrend != null) {
+            statTeachersTrend.setText("↑ 5% active");
+            statTeachersTrend.getStyleClass().add("stat-trend-up");
+        }
+        if (statCoursesTrend != null) {
+            statCoursesTrend.setText("↑ 8% offered");
+            statCoursesTrend.getStyleClass().add("stat-trend-up");
+        }
     }
 
     // ═══════════════════════════════════════════════════════════

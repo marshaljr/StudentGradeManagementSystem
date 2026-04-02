@@ -27,12 +27,26 @@ public class StudentDashboardController {
     @FXML private Label userLabel;
     @FXML private Label pageTitle;
     @FXML private VBox  subContent;
+    @FXML private VBox  sidebarPane;
+    @FXML private Button sidebarToggleBtn;
+    @FXML private Button btnThemeToggle;
+    @FXML private Label breadcrumbCurrent;
+    @FXML private BorderPane mainRoot;  // For accessing root for dark mode styling
+
+    // Sidebar buttons for active state tracking
+    @FXML private Button btnDashboard;
+    @FXML private Button btnCourses;
+    @FXML private Button btnGrades;
+    @FXML private Button btnAttendance;
+    @FXML private Button btnTranscript;
 
     private final CourseDAO     courseDAO     = new CourseDAO();
     private final GradeDAO      gradeDAO      = new GradeDAO();
     private final AttendanceDAO attendanceDAO = new AttendanceDAO();
 
     private StudentUser currentStudent;
+    private boolean sidebarExpanded = true;  // Track sidebar state
+    private boolean darkModeEnabled = false;  // Track dark mode state
 
     @FXML
     public void initialize() {
@@ -44,7 +58,59 @@ public class StudentDashboardController {
 
     @FXML public void handleLogout() { NavigationUtil.logout(); }
 
+    /**
+     * Toggles sidebar visibility for mobile/tablet responsiveness
+     */
+    @FXML
+    private void toggleSidebar() {
+        sidebarExpanded = !sidebarExpanded;
+        if (sidebarExpanded) {
+            sidebarPane.getStyleClass().remove("sidebar-hidden");
+            sidebarPane.getStyleClass().add("sidebar-expanded");
+        } else {
+            sidebarPane.getStyleClass().remove("sidebar-expanded");
+            sidebarPane.getStyleClass().add("sidebar-hidden");
+        }
+    }
+
+    /**
+     * Toggles dark mode theme for the entire application
+     */
+    @FXML
+    private void toggleDarkMode() {
+        darkModeEnabled = !darkModeEnabled;
+        if (mainRoot != null) {
+            if (darkModeEnabled) {
+                mainRoot.getStyleClass().add("dark-mode");
+                btnThemeToggle.setText("☀️");  // Show sun when in dark mode
+            } else {
+                mainRoot.getStyleClass().remove("dark-mode");
+                btnThemeToggle.setText("🌙");  // Show moon when in light mode
+            }
+        }
+    }
+
+    /**
+     * Sets the active navigation button style and updates breadcrumb
+     */
+    private void setActiveNavButton(Button activeButton, String pageName) {
+        // Remove active style from all buttons
+        for (Button btn : new Button[]{btnDashboard, btnCourses, btnGrades, btnAttendance, btnTranscript}) {
+            btn.getStyleClass().remove("sidebar-btn-active");
+            btn.getStyleClass().add("sidebar-btn");
+        }
+        // Set active style on the current button
+        activeButton.getStyleClass().remove("sidebar-btn");
+        activeButton.getStyleClass().add("sidebar-btn-active");
+        
+        // Update breadcrumb
+        if (breadcrumbCurrent != null) {
+            breadcrumbCurrent.setText(pageName);
+        }
+    }
+
     @FXML public void showDashboard() {
+        setActiveNavButton(btnDashboard, "Dashboard");
         pageTitle.setText("My Dashboard");
         subContent.getChildren().clear();
 
@@ -73,6 +139,7 @@ public class StudentDashboardController {
     }
 
     @FXML public void showCourses() {
+        setActiveNavButton(btnCourses, "My Courses");
         pageTitle.setText("My Courses");
         subContent.getChildren().clear();
 
@@ -97,6 +164,7 @@ public class StudentDashboardController {
     }
 
     @FXML public void showGrades() {
+        setActiveNavButton(btnGrades, "My Grades");
         pageTitle.setText("My Grades");
         subContent.getChildren().clear();
 
@@ -180,6 +248,7 @@ public class StudentDashboardController {
     }
 
     @FXML public void showAttendance() {
+        setActiveNavButton(btnAttendance, "Attendance");
         pageTitle.setText("My Attendance");
         subContent.getChildren().clear();
 
@@ -224,6 +293,7 @@ public class StudentDashboardController {
     }
 
     @FXML public void showTranscript() {
+        setActiveNavButton(btnTranscript, "Transcript");
         pageTitle.setText("Download Transcript");
         subContent.getChildren().clear();
 
