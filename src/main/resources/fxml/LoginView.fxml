@@ -84,7 +84,7 @@
                 <Region prefHeight="16"/>
 
                 <!-- Remember & Forgot Password row -->
-                <HBox alignment="CENTER_LEFT" spacing="0" style="-fx-padding: 0 0 20 0;">
+                <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 0 0 20 0;">
                     <CheckBox fx:id="rememberMeCheckBox" text="Remember me" 
                               styleClass="remember-checkbox" HBox.hgrow="ALWAYS">
                         <tooltip><Tooltip text="Keep me logged in on this device"/>
@@ -103,10 +103,11 @@
                     <tooltip><Tooltip text="Click to authenticate your credentials (Enter)"/></tooltip>
                 </Button>
 
-                <Region prefHeight="36"/>
+                <!-- Spacer -->
+                <Region VBox.vgrow="ALWAYS" prefHeight="40"/>
 
                 <!-- Divider -->
-                <HBox alignment="CENTER" spacing="12" style="-fx-padding: 0 0 20 0;">
+                <HBox alignment="CENTER" spacing="12" style="-fx-padding: 20 0 20 0;">
                     <Region HBox.hgrow="ALWAYS" style="-fx-background-color: #E2E8F0; -fx-min-height: 1;"/>
                     <Label text="Or" styleClass="divider-text"/>
                     <Region HBox.hgrow="ALWAYS" style="-fx-background-color: #E2E8F0; -fx-min-height: 1;"/>
