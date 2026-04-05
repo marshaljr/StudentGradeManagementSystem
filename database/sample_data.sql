@@ -4,7 +4,6 @@
 -- ============================================================
 USE student_grade_db;
 
-<<<<<<< HEAD
 -- Disable foreign key checks temporarily
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -33,8 +32,6 @@ ALTER TABLE attendance AUTO_INCREMENT = 1;
 -- Re-enable foreign key checks
 SET FOREIGN_KEY_CHECKS=1;
 
-=======
->>>>>>> dc8ddd81eefd8c1fff1c6df629e2bf26eab2a51f
 -- ============================================================
 -- USERS  (passwords are SHA-256 of "password123")
 -- SHA-256("password123") = ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f
@@ -81,17 +78,6 @@ INSERT INTO courses (course_code, course_name, description, credits, teacher_id,
 ('ENG101', 'English Composition',          'Academic writing and communication',       3, 3, 'First',  '2024-2025'),
 ('CS301', 'Database Management Systems',   'Relational databases and SQL',             3, 1, 'Second', '2024-2025');
 
-<<<<<<< HEAD
-=======
--- ENROLLMENTS
-INSERT INTO enrollments (student_id, course_id) VALUES
-(1, 1),(1, 2),(1, 3),(1, 4),
-(2, 1),(2, 2),(2, 3),
-(3, 3),(3, 4),
-(4, 1),(4, 4),
-(5, 4);
-
->>>>>>> dc8ddd81eefd8c1fff1c6df629e2bf26eab2a51f
 -- ASSESSMENTS for CS101
 INSERT INTO assessments (course_id, title, type, max_marks, weight, due_date) VALUES
 (1, 'Quiz 1',        'QUIZ',       20, 10, '2024-09-15'),
@@ -109,7 +95,6 @@ INSERT INTO assessments (course_id, title, type, max_marks, weight, due_date) VA
 (3, 'Midterm Exam',  'MIDTERM',   100, 40, '2024-10-22'),
 (3, 'Final Exam',    'FINAL',     100, 50, '2024-12-15');
 
-<<<<<<< HEAD
 -- ============================================================
 -- ADDITIONAL DATA TO REACH 400+ RECORDS
 -- ============================================================
@@ -564,21 +549,3 @@ INSERT INTO attendance (student_id, course_id, att_date, status, recorded_by) VA
 (56, 1, '2024-11-15', 'LATE', 3),(57, 1, '2024-11-15', 'PRESENT', 3),(58, 1, '2024-11-15', 'PRESENT', 3),(59, 1, '2024-11-15', 'PRESENT', 3),(60, 1, '2024-11-15', 'ABSENT', 3),
 (61, 1, '2024-11-17', 'PRESENT', 3),(62, 1, '2024-11-17', 'PRESENT', 3),(63, 1, '2024-11-17', 'LATE', 3),(64, 1, '2024-11-17', 'PRESENT', 3),(65, 1, '2024-11-17', 'PRESENT', 3),
 (66, 1, '2024-11-17', 'ABSENT', 3),(67, 1, '2024-11-17', 'PRESENT', 3),(68, 1, '2024-11-17', 'PRESENT', 3),(69, 1, '2024-11-17', 'PRESENT', 3),(70, 1, '2024-11-17', 'LATE', 3);
-=======
--- GRADES for student 1 (Alice) in CS101
-INSERT INTO grades (student_id, assessment_id, marks_obtained, graded_by) VALUES
-(1, 1, 17, 3),(1, 2, 44, 3),(1, 3, 82, 3),(1, 4, 46, 3),(1, 5, 88, 3),
--- Alice in CS201
-(1, 6, 18, 3),(1, 7, 43, 3),(1, 8, 78, 3),(1, 9, 85, 3),
--- Bob in CS101
-(2, 1, 15, 3),(2, 2, 38, 3),(2, 3, 70, 3),(2, 4, 42, 3),(2, 5, 75, 3);
-
--- ATTENDANCE samples (last 5 class days)
-INSERT INTO attendance (student_id, course_id, att_date, status, recorded_by) VALUES
-(1,1,'2024-11-04','PRESENT',3),(1,1,'2024-11-06','PRESENT',3),(1,1,'2024-11-08','LATE',3),
-(1,1,'2024-11-11','PRESENT',3),(1,1,'2024-11-13','PRESENT',3),
-(2,1,'2024-11-04','PRESENT',3),(2,1,'2024-11-06','ABSENT',3),(2,1,'2024-11-08','PRESENT',3),
-(2,1,'2024-11-11','PRESENT',3),(2,1,'2024-11-13','ABSENT',3),
-(3,3,'2024-11-04','PRESENT',4),(3,3,'2024-11-06','PRESENT',4),(3,3,'2024-11-08','PRESENT',4),
-(4,1,'2024-11-04','ABSENT',3),(4,1,'2024-11-06','PRESENT',3),(4,1,'2024-11-08','PRESENT',3);
->>>>>>> dc8ddd81eefd8c1fff1c6df629e2bf26eab2a51f
